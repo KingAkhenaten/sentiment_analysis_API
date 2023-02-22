@@ -7,7 +7,22 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Classify Text</a>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+       
+        <div class="form-group">
+            <label for="Sentence" class="control-label">Sentence</label>
+            <input for="Sentence" class="form-control" />
+        </div>
+        
+        <br />
+
+        <div class="form-group">
+            <input type="submit" value="Classify Text" class="btn btn-primary" />
+        </div>
+    </form>
+
+    <!--<a asp-action="Create">Classify Text</a>-->
 </p>
 <table class="table">
     <thead>

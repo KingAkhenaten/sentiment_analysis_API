@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text;
 
 namespace ClientGUI.Controllers
 {
@@ -40,6 +41,33 @@ namespace ClientGUI.Controllers
             sentiments.Add(new SentimentModel { Id = 3, Timestamp = new DateTime(2023, 2, 21, 20, 30, 0), TextSearched = "another", SentimentResult = "neutral", PercentageScore = 0.98});
 
             return View(sentiments);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(SentenceModel sentence)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                //Package up the sentence to send
+                StringContent content = new StringContent(JsonConvert.SerializeObject(sentence), Encoding.UTF8, "application/json");
+
+                //Send it to the API and ask to analyze
+                using (var response = await httpClient.PostAsync(SENTIMENT_SOURCE, content))
+                {
+                    //Receive analysis back + package to send to DB
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    StringContent content2 = new StringContent(JsonConvert.SerializeObject(apiResponse), Encoding.UTF8, "application/json");
+
+                    //Send the response to the DB
+                    using (var response2 = await httpClient.PostAsync(DATABASE_SOURCE, content2))
+                    {
+                        string apiResponse2 = await response.Content.ReadAsStringAsync();
+                    }
+                }
+            }
+
+            //Then, we want to go back to Index
+            return RedirectToAction("Index");
         }
     }
 }
