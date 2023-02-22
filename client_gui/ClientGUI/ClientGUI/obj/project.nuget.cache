@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "K65Yi0anzKTW2mYnDXnzJ5KpCiSGG7Ijxf8a2I+rxa6Fh4LqMxjjGOhOfxTrTpvCrxQP1G5ShVA8F++Km/Hokg==",
+  "success": true,
+  "projectFilePath": "E:\\Spring 2023\\Software Production\\Project\\Code\\client_gui\\ClientGUI\\ClientGUI\\ClientGUI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\katie\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.14.0\\microsoft.visualstudio.azure.containers.tools.targets.1.14.0.nupkg.sha512"
+  ],
+  "logs": []
+}
