@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+
+  db:
+    build: db
+    image: project2/sentiment-analysis-db
+
+  sentiment_analysis:
+    build: sentiment_analysis
+    image: project2/sentiment-analysis-sentiment_analysis
+    
+
+ 
