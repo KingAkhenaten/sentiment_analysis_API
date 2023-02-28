@@ -12,7 +12,7 @@ namespace ClientGUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private string SENTIMENT_SOURCE = @"http://host.docker.internal:8000/analyze"; //@"https://localhost:8000/analyze";
+        private string SENTIMENT_SOURCE = @"http://host.docker.internal:8000/analyze"; 
         private string connString = "Server=host.docker.internal;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
 
         public HomeController(ILogger<HomeController> logger)
@@ -22,10 +22,14 @@ namespace ClientGUI.Controllers
 
         public async Task<IActionResult> Index()
         {
+            //Maintain a list of all the sentiments stored in the DB
             List<SentimentModel> sentiments = new List<SentimentModel>();
 
+            //Connect to the DB
             NpgsqlConnection conn = new NpgsqlConnection(connString);
             conn.Open();
+
+            //Query the DB for all sentiment objects
             string query = "SELECT * FROM SentimentAnalysis";
             NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
             
@@ -33,6 +37,7 @@ namespace ClientGUI.Controllers
             {
                 while (rdr.Read())
                 {
+                    //Read each object from DB, form the SentimentModel object, add it to the list
                     object[] vals = new object[rdr.FieldCount];
                     rdr.GetValues(vals);
                     sentiments.Add(
@@ -46,25 +51,16 @@ namespace ClientGUI.Controllers
                         });
                 }
             }
-            conn.Close();
-            //Need to have database set up - for now, I'll just hardcode some in
-            /* 
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync(DATABASE_SOURCE))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
 
-                    sentiments = JsonConvert.DeserializeObject<List<SentimentModel>>(apiResponse);
-                }
-            }
-            */
+            //Close the DB connection
+            conn.Close();
 
             //Dummy sentiment data
             //sentiments.Add(new SentimentModel { Id = 1, Timestamp = new DateTime(2023, 2, 21, 20, 28, 0), TextSearched = "example", SentimentResult = "postive", PercentageScore = 0.23});
             //sentiments.Add(new SentimentModel { Id = 2, Timestamp = new DateTime(2023, 2, 21, 20, 29, 0), TextSearched = "test", SentimentResult = "negative", PercentageScore = 0.57});
             //sentiments.Add(new SentimentModel { Id = 3, Timestamp = new DateTime(2023, 2, 21, 20, 30, 0), TextSearched = "another", SentimentResult = "neutral", PercentageScore = 0.98});
 
+            //Return the index view, showing the queried sentiments in the list view
             return View(sentiments);
         }
 
@@ -82,16 +78,24 @@ namespace ClientGUI.Controllers
             {
                 //Package up the sentence to send
                 //StringContent content = new StringContent(s.Sentence, Encoding.UTF8, "application/json");
-                StringContent content = new StringContent(JsonConvert.SerializeObject(s), Encoding.UTF8, "application/json");
+                //StringContent content = new StringContent(JsonConvert.SerializeObject(s), Encoding.UTF8, "application/json");
+                string json = "{\"sentence\": \"" + s.Sentence + "\"}";
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 //Send it to the API and ask to analyze
                 using (var response = await httpClient.PostAsync(SENTIMENT_SOURCE, content))
                 {
+                    //Read the response from the API
                     System.Diagnostics.Debug.WriteLine($"Response: {response.ToString()}");
 
+                    string res = await response.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine($"{res}");
+
+                    //Connect to the DB
                     NpgsqlConnection conn = new NpgsqlConnection(connString);
                     conn.Open();
 
+                    //Ask the DB to add the sentiment result as a new row in the table
                     string query = "INSERT INTO SentimentAnalysis " +
                            "(TimeStamp, Text, SentimentScore, SentimentPercentage) " +
                            "VALUES (@TimeStamp, @Text, @SentimentScore, @SentimentPercentage);";
@@ -111,19 +115,8 @@ namespace ClientGUI.Controllers
                         System.Diagnostics.Debug.WriteLine($"Failed to create in DB: {e.Message}");
                     }
 
+                    //Close the DB connection
                     conn.Close();
-
-                    /*
-                    //Receive analysis back + package to send to DB
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    StringContent content2 = new StringContent(JsonConvert.SerializeObject(apiResponse), Encoding.UTF8, "application/json");
-
-                    //Send the response to the DB
-                    using (var response2 = await httpClient.PostAsync(DATABASE_SOURCE, content2))
-                    {
-                        string apiResponse2 = await response.Content.ReadAsStringAsync();
-                    }
-                    */
                 }
             }
 
