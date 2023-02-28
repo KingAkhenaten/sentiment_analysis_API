@@ -6,6 +6,10 @@ services:
     build: db
     image: project2/sentiment-analysis-db
 
+  client_gui:
+    build: client_gui
+    image: project2/client_gui
+
   sentiment_analysis:
     build: sentiment_analysis
     image: project2/sentiment-analysis-sentiment_analysis
