@@ -2,7 +2,7 @@
 # send back data
 
 from flask import Flask, request
-from analyze import do_analysis
+from analyze import do_analysis, format_analysis
 
 app = Flask(__name__)
 
@@ -14,4 +14,5 @@ def hello_world():
 def analyze():
     data = request.json
     result = do_analysis(data['sentence'])
-    return result
+
+    return format_analysis(result)
