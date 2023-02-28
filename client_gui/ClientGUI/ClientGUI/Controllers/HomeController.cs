@@ -26,8 +26,8 @@ namespace ClientGUI.Controllers
 
         //private string SENTIMENT_SOURCE = @"http://host.docker.internal:8000/analyze"; 
         //private string connString = "Server=host.docker.internal;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
-        private string SENTIMENT_SOURCE = @"http://code-sentiment_analysis-1:8000/analyze";
-        private string connString = "Server=code-db-1;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
+        private string SENTIMENT_SOURCE = @"http://5400-project-sentiment_analysis-1:8000/analyze";
+        private string connString = "Server=5400-project-db-1;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
 
         public HomeController(ILogger<HomeController> logger)
         {
