@@ -47,7 +47,7 @@ namespace ClientGUI.Controllers
                             Timestamp = (DateTime)vals[1],
                             TextSearched = (string)vals[2],
                             SentimentResult = (string)vals[3],
-                            PercentageScore = (double)vals[4]
+                            PercentageScore = (float)vals[4]
                         });
                 }
             }
@@ -91,6 +91,11 @@ namespace ClientGUI.Controllers
                     string res = await response.Content.ReadAsStringAsync();
                     System.Diagnostics.Debug.WriteLine($"{res}");
 
+                    //{'result': f'{amount * 100}% {polarity}'}
+                    string val = res.Split("'")[3];
+                    string percentage = val.Split("%")[0].Trim();
+                    string score = val.Split("%")[1].Trim();
+
                     //Connect to the DB
                     NpgsqlConnection conn = new NpgsqlConnection(connString);
                     conn.Open();
@@ -103,8 +108,8 @@ namespace ClientGUI.Controllers
                     NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@TimeStamp", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Text", s.Sentence);
-                    cmd.Parameters.AddWithValue("@SentimentScore", "test");
-                    cmd.Parameters.AddWithValue("@SentimentPercentage", 1.0);
+                    cmd.Parameters.AddWithValue("@SentimentScore", score);
+                    cmd.Parameters.AddWithValue("@SentimentPercentage", percentage);
 
                     try
                     {
