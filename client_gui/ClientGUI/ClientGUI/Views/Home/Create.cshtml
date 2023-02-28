@@ -1,7 +1,20 @@
-﻿@model ClientGUI.Models.SentenceModel
+﻿<!--
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	Solution/Project:  ClientGUI - Sentiment Analysis Project
+//	File Name:         Create.cshtml
+//	Description:       Page for entering the sentence information to be sent to the API.
+//	Course:            CSCI-5400 - Software Production
+//	Author:            Katie Wilson, wilsonkl4@etsu.edu, East Tennessee State University
+//	Last Modified:     02/28/23
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+@model ClientGUI.Models.SentenceModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Classify Text";
 }
 
 <h1>Classify Text</h1>
@@ -15,6 +28,7 @@
                 <label asp-for="Sentence" class="control-label"></label>
                 <input asp-for="Sentence" class="form-control" />
                 <span asp-validation-for="Sentence" class="text-danger"></span>
+                <br />
             </div>
             <div class="form-group">
                 <input type="submit" value="Classify Text" class="btn btn-primary" />
@@ -24,6 +38,7 @@
 </div>
 
 <div>
+    <br />
     <a asp-action="Index">Back to List</a>
 </div>
 

@@ -1,4 +1,16 @@
-﻿using ClientGUI.Models;
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	Solution/Project:  ClientGUI - Sentiment Analysis Project
+//	File Name:         HomeController.cs
+//	Description:       The main file of the client-side program - routes and sends requests between this service,
+//                     the database, and the sentiment API.
+//	Course:            CSCI-5400 - Software Production
+//	Author:            Katie Wilson, wilsonkl4@etsu.edu, East Tennessee State University
+//	Last Modified:     02/28/23
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using ClientGUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Npgsql;
@@ -55,10 +67,9 @@ namespace ClientGUI.Controllers
             //Close the DB connection
             conn.Close();
 
-            //Dummy sentiment data
-            //sentiments.Add(new SentimentModel { Id = 1, Timestamp = new DateTime(2023, 2, 21, 20, 28, 0), TextSearched = "example", SentimentResult = "postive", PercentageScore = 0.23});
-            //sentiments.Add(new SentimentModel { Id = 2, Timestamp = new DateTime(2023, 2, 21, 20, 29, 0), TextSearched = "test", SentimentResult = "negative", PercentageScore = 0.57});
-            //sentiments.Add(new SentimentModel { Id = 3, Timestamp = new DateTime(2023, 2, 21, 20, 30, 0), TextSearched = "another", SentimentResult = "neutral", PercentageScore = 0.98});
+            //If there are no sentiments, set the List to null (to allow for different view in Index)
+            if (sentiments.Count == 0)
+                sentiments = null;
 
             //Return the index view, showing the queried sentiments in the list view
             return View(sentiments);
@@ -77,8 +88,6 @@ namespace ClientGUI.Controllers
             using (var httpClient = new HttpClient())
             {
                 //Package up the sentence to send
-                //StringContent content = new StringContent(s.Sentence, Encoding.UTF8, "application/json");
-                //StringContent content = new StringContent(JsonConvert.SerializeObject(s), Encoding.UTF8, "application/json");
                 string json = "{\"sentence\": \"" + s.Sentence + "\"}";
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 

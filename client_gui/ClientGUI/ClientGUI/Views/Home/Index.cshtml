@@ -1,80 +1,78 @@
-﻿@model IEnumerable<ClientGUI.Models.SentimentModel>
+﻿<!--
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	Solution/Project:  ClientGUI - Sentiment Analysis Project
+//	File Name:         Index.cshtml
+//	Description:       Main page of the application - displays list of all sentiments in the DB.
+//	Course:            CSCI-5400 - Software Production
+//	Author:            Katie Wilson, wilsonkl4@etsu.edu, East Tennessee State University
+//	Last Modified:     02/28/23
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+@model IEnumerable<ClientGUI.Models.SentimentModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sentiment Results";
 }
 
-<h1>Index</h1>
+<h1>List of Sentiment Results</h1>
 
 <p>
-    <!--
-    <form method="post" action="Home/Create">
-        Sentence:<br />
-        <input type="text" name="Sentence" value="" /><br />
-        <input type="submit" value="Classify Text" class="submit" />
-    </form>
-    -->
-    <!--
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-       
-        <div class="form-group">
-            <label for="Sentence" class="control-label">Sentence</label>
-            <input for="Sentence" class="form-control" />
-        </div>
-        
-        <br />
-
-        <div class="form-group">
-            <input type="submit" value="Classify Text" class="btn btn-primary" />
-        </div>
-    </form>
-    -->
-    <a asp-action="Create">Classify Text</a>
+    <a asp-action="Create" class="btn btn-primary">Classify Text</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Timestamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TextSearched)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SentimentResult)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PercentageScore)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Timestamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TextSearched)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SentimentResult)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PercentageScore)
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
+@if (Model == null)
+{
+    <p>There are currently no sentiment results in the database. Please select the "Classify Text" option above.</p>
 }
-    </tbody>
-</table>
+else
+{
+        <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Timestamp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TextSearched)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SentimentResult)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PercentageScore)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Timestamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TextSearched)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SentimentResult)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PercentageScore)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+
+}
