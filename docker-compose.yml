@@ -7,7 +7,9 @@ services:
     image: project2/sentiment-analysis-db
 
   client_gui:
-    build: client_gui
+    build: 
+      context: client_gui/ClientGUI/
+      dockerfile: Dockerfile
     image: project2/client_gui
 
   sentiment_analysis:
