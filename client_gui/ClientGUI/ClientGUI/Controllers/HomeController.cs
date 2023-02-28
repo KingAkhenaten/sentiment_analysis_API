@@ -91,10 +91,29 @@ namespace ClientGUI.Controllers
                     string res = await response.Content.ReadAsStringAsync();
                     System.Diagnostics.Debug.WriteLine($"{res}");
 
-                    //{'result': f'{amount * 100}% {polarity}'}
-                    string val = res.Split("'")[3];
+                    //{"result": "{amount * 100}% {polarity}"}
+                    string val = res.Split("\"")[3];
                     string percentage = val.Split("%")[0].Trim();
+                    double perc = (double.Parse(percentage) / 100.0);
                     string score = val.Split("%")[1].Trim();
+
+                    System.Diagnostics.Debug.WriteLine($"{perc}");
+                    System.Diagnostics.Debug.WriteLine($"{score}");
+
+                    string scoreFull = "";
+                    switch(score)
+                    {
+                        case "pos":
+                            scoreFull = "positive";
+                            break;
+                        case "neg":
+                            scoreFull = "negative";
+                            break;
+                        case "neu":
+                            scoreFull = "neutral";
+                            break;
+                    }
+
 
                     //Connect to the DB
                     NpgsqlConnection conn = new NpgsqlConnection(connString);
@@ -108,8 +127,8 @@ namespace ClientGUI.Controllers
                     NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@TimeStamp", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Text", s.Sentence);
-                    cmd.Parameters.AddWithValue("@SentimentScore", score);
-                    cmd.Parameters.AddWithValue("@SentimentPercentage", percentage);
+                    cmd.Parameters.AddWithValue("@SentimentScore", scoreFull);
+                    cmd.Parameters.AddWithValue("@SentimentPercentage", perc);
 
                     try
                     {
