@@ -2,21 +2,22 @@ version: '3.9'
 
 services:
 
-  db:
-    build: db
-    image: project2/sentiment-analysis-db
+    db:
+        build: db
+        image: project2/sentiment-analysis-db
+        ports:
+            - '5432:5432'
 
-  client_gui:
-    build: 
-      context: client_gui/ClientGUI/
-      dockerfile: Dockerfile
-    image: project2/client_gui
-    ports:
-      - '32768:80'
+    client_gui:
+        build: 
+            context: client_gui/ClientGUI/
+            dockerfile: Dockerfile
+        image: project2/client_gui
+        ports:
+            - '32768:80'
 
-  sentiment_analysis:
-    build: sentiment_analysis
-    image: project2/sentiment-analysis-sentiment_analysis
-    
-
- 
+    sentiment_analysis:
+        build: sentiment_analysis
+        image: project2/sentiment-analysis-sentiment_analysis
+        ports:
+            - '8000:8000'
