@@ -10,7 +10,8 @@ namespace ClientGUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private string SENTIMENT_SOURCE = @"https://localhost:1234/analyze";
+        private string SENTIMENT_SOURCE = @"http://host.docker.internal:8000/analyze";
+        //private string SENTIMENT_SOURCE = @"https://localhost:8000/analyze";
         private string DATABASE_SOURCE = @"https://localhost:1234/";
 
         public HomeController(ILogger<HomeController> logger)
@@ -43,17 +44,32 @@ namespace ClientGUI.Controllers
             return View(sentiments);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(SentenceModel sentence)
+        public IActionResult Create()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(SentenceModel s)
+        {
+            System.Diagnostics.Debug.WriteLine($"Sentence: {s.Sentence}");
+
             using (var httpClient = new HttpClient())
             {
                 //Package up the sentence to send
-                StringContent content = new StringContent(JsonConvert.SerializeObject(sentence), Encoding.UTF8, "application/json");
+                //StringContent content = new StringContent(s.Sentence, Encoding.UTF8, "application/json");
+                string json = "{\"sentence\": \"" + s.Sentence + "\"}";
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                //StringContent content = new StringContent(JsonConvert.SerializeObject(s), Encoding.UTF8, "application/json");
 
                 //Send it to the API and ask to analyze
                 using (var response = await httpClient.PostAsync(SENTIMENT_SOURCE, content))
                 {
+                    System.Diagnostics.Debug.WriteLine($"Response: {response.ToString()}");
+                    string res = await response.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine($"{res}");
+
+                    /*
                     //Receive analysis back + package to send to DB
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     StringContent content2 = new StringContent(JsonConvert.SerializeObject(apiResponse), Encoding.UTF8, "application/json");
@@ -63,6 +79,7 @@ namespace ClientGUI.Controllers
                     {
                         string apiResponse2 = await response.Content.ReadAsStringAsync();
                     }
+                    */
                 }
             }
 
