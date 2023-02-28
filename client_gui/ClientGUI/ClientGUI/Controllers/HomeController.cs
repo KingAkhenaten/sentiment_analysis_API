@@ -91,6 +91,7 @@ namespace ClientGUI.Controllers
                     string res = await response.Content.ReadAsStringAsync();
                     System.Diagnostics.Debug.WriteLine($"{res}");
 
+                    //Parse the response from the API
                     //{"result": "{amount * 100}% {polarity}"}
                     string val = res.Split("\"")[3];
                     string percentage = val.Split("%")[0].Trim();
@@ -143,6 +144,34 @@ namespace ClientGUI.Controllers
                     conn.Close();
                 }
             }
+
+            //Then, we want to go back to Index
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            //Connect to the DB
+            NpgsqlConnection conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            //Ask the DB to delete the sentiment with the given Id
+            string query = "DELETE FROM SentimentAnalysis WHERE ID = @Id;";
+
+            NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (NpgsqlException e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to delete in DB sentiment with ID {id}: {e.Message}");
+            }
+
+            //Close the DB connection
+            conn.Close();
 
             //Then, we want to go back to Index
             return RedirectToAction("Index");
