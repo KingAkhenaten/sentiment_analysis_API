@@ -21,14 +21,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.10'
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
         pip install --upgrade ntlk 
-        python3 -m pip install flake8 pytest Flask
+        pip install flake8 pytest Flask
         python3 -m nltk.downloader vader_lexicon
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
