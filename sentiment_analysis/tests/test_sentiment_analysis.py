@@ -4,6 +4,7 @@ import pytest
 
 INPUT = "this is a sentence"
 
+# Implementation Tests
 @pytest.fixture
 def get_analysis():
     return do_analysis(INPUT)
@@ -25,6 +26,7 @@ def test_format_analyze(get_analysis):
     assert type(f_analysis['result']) == str
 
 
+# Unit tests
 def test_post_analyze():
     form = {"sentence": INPUT}
     response = app.test_client().post('/analyze', json=form)
