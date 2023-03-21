@@ -3,7 +3,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 def do_analysis(sentence:str=None) -> str:
     if sentence is None:
-        return Exception("sentence not specified")
+        return TypeError
 
     sid = SentimentIntensityAnalyzer()
     ss = sid.polarity_scores(sentence)
@@ -11,6 +11,9 @@ def do_analysis(sentence:str=None) -> str:
 
 
 def format_analysis(ss: dict):
+    if ss is None:
+        return TypeError
+
     polarity = max(ss, key=ss.get)
     amount = ss[max(ss, key=ss.get)]
 

@@ -5,7 +5,7 @@ EXPOSE 8000
 RUN apt update -y && \
     apt install -y python3 python3-pip
 
-RUN pip install Flask nltk
+RUN pip install Flask nltk pytest
 RUN python3 -m nltk.downloader vader_lexicon
 
 COPY . /sentiment_analysis/
