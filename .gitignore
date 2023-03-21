@@ -398,5 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Sentiment Analysis
-./sentiment_analysis/.pytest_cache
-./.idea
+./sentiment_analysis/.pytest_cache/
+./.idea/
