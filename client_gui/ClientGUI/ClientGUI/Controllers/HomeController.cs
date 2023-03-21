@@ -1,4 +1,16 @@
-﻿using ClientGUI.Models;
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	Solution/Project:  ClientGUI - Sentiment Analysis Project
+//	File Name:         HomeController.cs
+//	Description:       The main file of the client-side program - routes and sends requests between this service,
+//                     the database, and the sentiment API.
+//	Course:            CSCI-5400 - Software Production
+//	Author:            Katie Wilson, wilsonkl4@etsu.edu, East Tennessee State University
+//	Last Modified:     02/28/23
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using ClientGUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Npgsql;
@@ -12,8 +24,10 @@ namespace ClientGUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private string SENTIMENT_SOURCE = @"http://host.docker.internal:8000/analyze"; 
-        private string connString = "Server=host.docker.internal;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
+        //private string SENTIMENT_SOURCE = @"http://host.docker.internal:8000/analyze"; 
+        //private string connString = "Server=host.docker.internal;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
+        private string SENTIMENT_SOURCE = @"http://5400-project-sentiment_analysis-1:8000/analyze";
+        private string connString = "Server=5400-project-db-1;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -47,7 +61,7 @@ namespace ClientGUI.Controllers
                             Timestamp = (DateTime)vals[1],
                             TextSearched = (string)vals[2],
                             SentimentResult = (string)vals[3],
-                            PercentageScore = (double)vals[4]
+                            PercentageScore = (float)vals[4]
                         });
                 }
             }
@@ -55,10 +69,9 @@ namespace ClientGUI.Controllers
             //Close the DB connection
             conn.Close();
 
-            //Dummy sentiment data
-            //sentiments.Add(new SentimentModel { Id = 1, Timestamp = new DateTime(2023, 2, 21, 20, 28, 0), TextSearched = "example", SentimentResult = "postive", PercentageScore = 0.23});
-            //sentiments.Add(new SentimentModel { Id = 2, Timestamp = new DateTime(2023, 2, 21, 20, 29, 0), TextSearched = "test", SentimentResult = "negative", PercentageScore = 0.57});
-            //sentiments.Add(new SentimentModel { Id = 3, Timestamp = new DateTime(2023, 2, 21, 20, 30, 0), TextSearched = "another", SentimentResult = "neutral", PercentageScore = 0.98});
+            //If there are no sentiments, set the List to null (to allow for different view in Index)
+            if (sentiments.Count == 0)
+                sentiments = null;
 
             //Return the index view, showing the queried sentiments in the list view
             return View(sentiments);
@@ -77,8 +90,6 @@ namespace ClientGUI.Controllers
             using (var httpClient = new HttpClient())
             {
                 //Package up the sentence to send
-                //StringContent content = new StringContent(s.Sentence, Encoding.UTF8, "application/json");
-                //StringContent content = new StringContent(JsonConvert.SerializeObject(s), Encoding.UTF8, "application/json");
                 string json = "{\"sentence\": \"" + s.Sentence + "\"}";
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -90,6 +101,31 @@ namespace ClientGUI.Controllers
 
                     string res = await response.Content.ReadAsStringAsync();
                     System.Diagnostics.Debug.WriteLine($"{res}");
+
+                    //Parse the response from the API
+                    //{"result": "{amount * 100}% {polarity}"}
+                    string val = res.Split("\"")[3];
+                    string percentage = val.Split("%")[0].Trim();
+                    double perc = (double.Parse(percentage) / 100.0);
+                    string score = val.Split("%")[1].Trim();
+
+                    System.Diagnostics.Debug.WriteLine($"{perc}");
+                    System.Diagnostics.Debug.WriteLine($"{score}");
+
+                    string scoreFull = "";
+                    switch(score)
+                    {
+                        case "pos":
+                            scoreFull = "positive";
+                            break;
+                        case "neg":
+                            scoreFull = "negative";
+                            break;
+                        case "neu":
+                            scoreFull = "neutral";
+                            break;
+                    }
+
 
                     //Connect to the DB
                     NpgsqlConnection conn = new NpgsqlConnection(connString);
@@ -103,8 +139,8 @@ namespace ClientGUI.Controllers
                     NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@TimeStamp", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Text", s.Sentence);
-                    cmd.Parameters.AddWithValue("@SentimentScore", "test");
-                    cmd.Parameters.AddWithValue("@SentimentPercentage", 1.0);
+                    cmd.Parameters.AddWithValue("@SentimentScore", scoreFull);
+                    cmd.Parameters.AddWithValue("@SentimentPercentage", perc);
 
                     try
                     {
@@ -119,6 +155,34 @@ namespace ClientGUI.Controllers
                     conn.Close();
                 }
             }
+
+            //Then, we want to go back to Index
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            //Connect to the DB
+            NpgsqlConnection conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            //Ask the DB to delete the sentiment with the given Id
+            string query = "DELETE FROM SentimentAnalysis WHERE ID = @Id;";
+
+            NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (NpgsqlException e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to delete in DB sentiment with ID {id}: {e.Message}");
+            }
+
+            //Close the DB connection
+            conn.Close();
 
             //Then, we want to go back to Index
             return RedirectToAction("Index");
