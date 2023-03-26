@@ -28,7 +28,7 @@ jobs:
       run: exit
       # Run the gui unit tests
 
-    - name: Run the integration tests
+    #- name: Run the integration tests
       # Run the integration tests
 
     - name: Tear down the Docker containers
