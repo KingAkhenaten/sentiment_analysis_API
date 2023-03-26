@@ -23,13 +23,15 @@ jobs:
     - name: Build the Docker images
       run: docker compose -f "docker-compose.yml" up -d --build
 
-    - name: Re-run the unit tests
+    - name: Open docker shell for Sentiment Analysis
       # Run the python unit tests
-      run: |
-        docker exec 5400-project-sentiment_analysis-1 sh
-        cd sentiment_analysis
-        pytest
-        exit
+      run: docker exec 5400-project-sentiment_analysis-1 sh
+    -name: cd into sentiment_analysis
+      run: cd sentiment_analysis
+    -name: Run the python unit tests
+      run: pytest
+    -name: Exit the docker shell
+      run: exit
       # Run the gui unit tests
 
     #- name: Run the integration tests
