@@ -26,11 +26,11 @@ jobs:
     - name: Open docker shell for Sentiment Analysis
       # Run the python unit tests
       run: docker exec 5400-project-sentiment_analysis-1 sh
-    -name: cd into sentiment_analysis
+    - name: cd into sentiment_analysis
       run: cd sentiment_analysis
-    -name: Run the python unit tests
+    - name: Run the python unit tests
       run: pytest
-    -name: Exit the docker shell
+    - dname: Exit the docker shell
       run: exit
       # Run the gui unit tests
 
