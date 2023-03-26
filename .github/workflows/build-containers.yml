@@ -1,0 +1,34 @@
+name: Setup Integration Environment
+
+on:
+  push:
+    branches:
+    - main
+    - BuildContainersTest
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker images
+      run: docker compose -f "docker-compose.yml" up -d --build
+
+    - name: Re-run the unit tests
+      # Run the python unit tests
+      run: docker exec -it 5400-project-sentiment_analysis-1 sh
+      run: cd sentiment_analysis
+      run: pytest
+      run: exit
+      
+      # Run the gui unit tests
+
+    - name: Run the integration tests
+      # Run the integration tests
+
+    - name: Tear down the Docker containers
+      run: docker compose -f "docker-compose.yml" down
+      
