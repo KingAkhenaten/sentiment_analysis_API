@@ -26,7 +26,7 @@ jobs:
     - name: Re-run the unit tests
       # Run the python unit tests
       run: |
-        docker exec -it 5400-project-sentiment_analysis-1 sh
+        docker exec 5400-project-sentiment_analysis-1 sh
         cd sentiment_analysis
         pytest
         exit
