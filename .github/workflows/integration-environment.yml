@@ -30,7 +30,7 @@ jobs:
       run: cd sentiment_analysis
     - name: Run the python unit tests
       run: pytest
-    - dname: Exit the docker shell
+    - name: Exit the docker shell
       run: exit
       # Run the gui unit tests
 
