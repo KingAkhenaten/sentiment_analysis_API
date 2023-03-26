@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
     - name: Build the Docker images
+      uses: actions/checkout@v3
       run: docker compose -f "docker-compose.yml" up -d --build
 
     - name: Re-run the unit tests
