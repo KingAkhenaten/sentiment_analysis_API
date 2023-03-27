@@ -51,12 +51,12 @@ namespace ClientGUI.Controllers
                 sentiments = null;
 
             //Return the index view, showing the queried sentiments in the list view
-            return View(sentiments);
+            return View("Index", sentiments);
         }
 
         public IActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         [HttpPost]

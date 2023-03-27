@@ -10,9 +10,8 @@ namespace ClientGUIUnitTesting
     {
         private HomeController sut; //sut = system under test
 
-        //Setup method is called before each test is ran
-        [SetUp]
-        public void Setup()
+        [Test]
+        public void IndexShouldReturnListOfSentiments()
         {
             //Mock the database and sentiment services using Moq
             var mockDataSource = new Mock<IDataSource>();
@@ -23,17 +22,16 @@ namespace ClientGUIUnitTesting
             //Create the system under test (sut) - the HomeController, using
             //the mocked services
             var sut = new HomeController(mockDataSource.Object, mockSentimentAnalyzer.Object);
-        }
 
-        [Test]
-        public void IndexShouldReturnListOfSentiments()
-        {
             //Call the Index method
             var actionResult = sut.Index().Result;
 
             //Ensure the view is returned
             var view = actionResult as ViewResult;
             Assert.NotNull(view);
+
+            //Ensure that the view is for the Index page
+            Assert.That(view.ViewName, Is.EqualTo("Index"));
 
             //Ensure the model is of the correct data type
             var model = view.Model as List<SentimentModel>;
@@ -53,6 +51,31 @@ namespace ClientGUIUnitTesting
                 Assert.That(model[i].PercentageScore, Is.EqualTo(testSentiments[i].PercentageScore));
             }
         }
+
+        [Test]
+        public void CreateNoArgsShouldReturnCreateView()
+        {
+            //Mock the database and sentiment services using Moq
+            var mockDataSource = new Mock<IDataSource>();
+            mockDataSource.Setup(x => x.GetSentiments()).Returns(GetTestListOfSentiments());
+
+            var mockSentimentAnalyzer = new Mock<ISentiment>();
+
+            //Create the system under test (sut) - the HomeController, using
+            //the mocked services
+            var sut = new HomeController(mockDataSource.Object, mockSentimentAnalyzer.Object);
+
+            //Call the create method
+            var actionResult = sut.Create();
+
+            //Ensure the view is returned
+            var view = actionResult as ViewResult;
+            Assert.NotNull(view);
+
+            //Ensure that the view is for the Create page
+            Assert.That(view.ViewName, Is.EqualTo("Create"));
+        }
+
 
         private List<SentimentModel> GetTestListOfSentiments()
         {
