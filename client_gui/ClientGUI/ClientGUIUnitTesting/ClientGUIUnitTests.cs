@@ -10,13 +10,9 @@ namespace ClientGUIUnitTesting
     {
         private HomeController sut; //sut = system under test
 
+        //Setup method is called before each test is ran
         [SetUp]
         public void Setup()
-        {
-        }
-
-        [Test]
-        public void IndexShouldReturnListOfSentiments()
         {
             //Mock the database and sentiment services using Moq
             var mockDataSource = new Mock<IDataSource>();
@@ -27,7 +23,11 @@ namespace ClientGUIUnitTesting
             //Create the system under test (sut) - the HomeController, using
             //the mocked services
             var sut = new HomeController(mockDataSource.Object, mockSentimentAnalyzer.Object);
+        }
 
+        [Test]
+        public void IndexShouldReturnListOfSentiments()
+        {
             //Call the Index method
             var actionResult = sut.Index().Result;
 
