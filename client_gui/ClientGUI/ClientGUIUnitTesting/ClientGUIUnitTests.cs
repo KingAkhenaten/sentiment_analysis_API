@@ -1,10 +1,15 @@
+using ClientGUI.Controllers;
+
 namespace ClientGUIUnitTesting
 {
-    public class Tests
+    public class ClientGUIUnitTests
     {
+        private HomeController sut; //sut = system under test
+
         [SetUp]
         public void Setup()
         {
+            sut = new HomeController();
         }
 
         [Test]
