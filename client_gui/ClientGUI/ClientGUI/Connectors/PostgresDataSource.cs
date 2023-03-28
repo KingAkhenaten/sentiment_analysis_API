@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	Solution/Project:  ClientGUI - Sentiment Analysis Project
+//	File Name:         PostgresDataSource.cs
+//	Description:       Implementation of IDataSource that connects to our Postgres Database.
+//	Course:            CSCI-5400 - Software Production
+//	Author:            Katie Wilson, wilsonkl4@etsu.edu, East Tennessee State University
+//	Last Modified:     03/28/23
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 using ClientGUI.Models;
 using Npgsql;
 

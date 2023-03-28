@@ -25,21 +25,18 @@ namespace ClientGUI.Controllers
     {
         //private string SENTIMENT_SOURCE = @"http://host.docker.internal:8000/analyze"; 
         //private string connString = "Server=host.docker.internal;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
-        private string SENTIMENT_SOURCE = @"http://5400-project-sentiment_analysis-1:8000/analyze";
-        private string DATABASE_SOURCE = "Server=5400-project-db-1;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
+        //private string SENTIMENT_SOURCE = @"http://5400-project-sentiment_analysis-1:8000/analyze";
+        //private string DATABASE_SOURCE = "Server=5400-project-db-1;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
 
         private IDataSource _dataSource;
         private ISentiment _sentimentAnalyzer;
-        public HomeController()
-        {
-            _dataSource = new PostgresDataSource(DATABASE_SOURCE);
-            _sentimentAnalyzer = new SentimentAnalyzer(SENTIMENT_SOURCE);
-        }
+
         public HomeController(IDataSource dataSource, ISentiment sentimentAnalyzer)
         {
             _dataSource = dataSource;
             _sentimentAnalyzer = sentimentAnalyzer;
         }
+        
 
         public async Task<IActionResult> Index()
         {

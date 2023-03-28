@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	Solution/Project:  ClientGUI - Sentiment Analysis Project
+//	File Name:         ClientGUIUnitTests.cs
+//	Description:       Unit tests for the ClientGUI application.
+//	Course:            CSCI-5400 - Software Production
+//	Author:            Katie Wilson, wilsonkl4@etsu.edu, East Tennessee State University
+//	Last Modified:     03/28/23
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 using ClientGUI.Controllers;
 using ClientGUI.Models;
 using ClientGUI.Connectors;
