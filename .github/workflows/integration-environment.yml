@@ -1,0 +1,35 @@
+# File Name: integration-environment.yml
+# Description: This workflow will build the integration environment
+# Author: Brandon Rhyno, rhynob@etsu.edu
+
+name: Setup Integration Environment
+
+on:
+  push:
+    branches:
+    - main
+    - BuildContainersTest
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker images
+      run: docker compose -f "docker-compose.yml" up -d --build
+
+    - name: Run the python unit tests for sentiment_analysis
+      run: docker exec 5400-project-sentiment_analysis-1 sh -c 'cd sentiment_analysis && pytest'
+
+    #- name: Run the gui unit tests
+
+    #- name: Run the integration tests
+      # Run the integration tests
+
+    - name: Tear down the Docker containers
+      run: docker compose -f "docker-compose.yml" down
