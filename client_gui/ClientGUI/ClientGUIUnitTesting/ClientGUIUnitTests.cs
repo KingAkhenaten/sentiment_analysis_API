@@ -93,7 +93,31 @@ namespace ClientGUIUnitTesting
 
             //Call the Create method
             var actionResult = sut.Create(s).Result;
-            TestContext.Out.WriteLine(actionResult);
+
+            //Ensure that we redirect
+            var redirect = actionResult as RedirectToActionResult;
+            Assert.NotNull(redirect);
+
+            //Ensure that the redirect is for the Index page
+            Assert.That(redirect.ActionName, Is.EqualTo("Index"));
+        }
+
+        [Test]
+        public void DeleteShouldRemoveSentiment()
+        {
+            //Mock the database and sentiment services using Moq
+            var mockDataSource = new Mock<IDataSource>();
+            mockDataSource.Setup(x => x.RemoveSentiment(0)).Returns(true);
+            mockDataSource.Setup(x => x.GetSentiments()).Returns(GetTestListOfSentiments());
+
+            var mockSentimentAnalyzer = new Mock<ISentiment>();
+
+            //Create the system under test (sut) - the HomeController, using
+            //the mocked services
+            var sut = new HomeController(mockDataSource.Object, mockSentimentAnalyzer.Object);
+
+            //Call the Delete method
+            var actionResult = sut.Delete(0).Result;
 
             //Ensure that we redirect
             var redirect = actionResult as RedirectToActionResult;
