@@ -14,7 +14,7 @@ namespace ClientGUI.Connectors
 
         public async Task<string[]> CreateSentiment(SentenceModel s)
         {
-            string[] results = new string[3];
+            string?[] results = new string[3];
 
             System.Diagnostics.Debug.WriteLine($"Sentence: {s.Sentence}");
 

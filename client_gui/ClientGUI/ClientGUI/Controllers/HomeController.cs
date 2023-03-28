@@ -44,7 +44,7 @@ namespace ClientGUI.Controllers
         public async Task<IActionResult> Index()
         {
             //Query the database for the sentiments
-            List<SentimentModel> sentiments = _dataSource.GetSentiments();
+            List<SentimentModel>? sentiments = _dataSource.GetSentiments();
 
             //If there are no sentiments, set the List to null (to allow for different view in Index)
             if (sentiments.Count == 0)
@@ -63,11 +63,10 @@ namespace ClientGUI.Controllers
         public async Task<IActionResult> Create(SentenceModel s)
         {
             //Create sentiment results by calling sentiment service
-            Task<string[]> task = _sentimentAnalyzer.CreateSentiment(s);
-            string[] results = task.Result;
+            string[] task = await _sentimentAnalyzer.CreateSentiment(s);
 
             //Insert sentiment into database table
-            bool success = _dataSource.AddSentiment(results[0], results[1], double.Parse(results[2]));
+            bool success = _dataSource.AddSentiment(task[0], task[1], double.Parse(task[2]));
             System.Diagnostics.Debug.WriteLine($"Insert succeeded: {success}");
 
             //Then, we want to go back to Index
