@@ -21,23 +21,7 @@ namespace IntegrationTest
 
 
 
-        [OneTimeSetUp]
-        public void Initialize()
-        {
-           
-            // Set up a connection to the PostgreSQL database
-            
-            this.conn.Open();
-        }
-
-
-        [OneTimeTearDown]
-        public void Cleanup()
-        {
-            // Close the HTTP client and the database connection
-            this._httpClient.Dispose();
-            this.conn.Dispose();
-        }
+       
 
         [Test]
         public async Task SentimentShouldBePositiveSentiment()
