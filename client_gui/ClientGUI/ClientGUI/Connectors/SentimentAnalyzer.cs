@@ -16,7 +16,13 @@ namespace ClientGUI.Connectors
 {
     public class SentimentAnalyzer : ISentiment
     {
+        private static string SENTIMENT_SOURCE = @"http://5400-project-sentiment_analysis-1:8000/analyze";
         public string ConnectionString { get; set; }
+
+        public SentimentAnalyzer()
+        {
+            ConnectionString = SENTIMENT_SOURCE;
+        }
 
         public SentimentAnalyzer(string connectionString)
         {
