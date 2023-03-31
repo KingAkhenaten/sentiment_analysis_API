@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientGUI", "ClientGUI\ClientGUI.csproj", "{E295E71D-162C-4DE5-932F-FFB99E2D2A9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientGUIUnitTesting", "ClientGUIUnitTesting\ClientGUIUnitTesting.csproj", "{06357013-67E7-4647-B753-D069C0CF9AC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientGUIUnitTesting", "ClientGUIUnitTesting\ClientGUIUnitTesting.csproj", "{06357013-67E7-4647-B753-D069C0CF9AC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTesting", "IntegrationTesting\IntegrationTesting.csproj", "{17595B7C-6F6F-4FE1-A491-FC3B3526BD9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{06357013-67E7-4647-B753-D069C0CF9AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06357013-67E7-4647-B753-D069C0CF9AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06357013-67E7-4647-B753-D069C0CF9AC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17595B7C-6F6F-4FE1-A491-FC3B3526BD9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17595B7C-6F6F-4FE1-A491-FC3B3526BD9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17595B7C-6F6F-4FE1-A491-FC3B3526BD9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17595B7C-6F6F-4FE1-A491-FC3B3526BD9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
