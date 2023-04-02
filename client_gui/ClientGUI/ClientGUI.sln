@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientGUI", "ClientGUI\Clie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientGUIUnitTesting", "ClientGUIUnitTesting\ClientGUIUnitTesting.csproj", "{06357013-67E7-4647-B753-D069C0CF9AC6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTest", "..\..\integration_test\IntegrationTest\IntegrationTest.csproj", "{1E907671-E870-46DB-8288-9D12237A0189}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{917AC912-7D12-4FCB-9E12-507EBA903B51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{06357013-67E7-4647-B753-D069C0CF9AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06357013-67E7-4647-B753-D069C0CF9AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06357013-67E7-4647-B753-D069C0CF9AC6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E907671-E870-46DB-8288-9D12237A0189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E907671-E870-46DB-8288-9D12237A0189}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E907671-E870-46DB-8288-9D12237A0189}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E907671-E870-46DB-8288-9D12237A0189}.Release|Any CPU.Build.0 = Release|Any CPU
+		{917AC912-7D12-4FCB-9E12-507EBA903B51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{917AC912-7D12-4FCB-9E12-507EBA903B51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{917AC912-7D12-4FCB-9E12-507EBA903B51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{917AC912-7D12-4FCB-9E12-507EBA903B51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
