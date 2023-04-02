@@ -23,9 +23,9 @@ services:
         ports:
             - '8000:8000'
 
-    integration_test:
-        build: integration_test
-        image: project2/integration_test
+    #integration_test:
+        #build: integration_test
+        #image: project2/integration_test
 
    # integration_test:
         #build: 
