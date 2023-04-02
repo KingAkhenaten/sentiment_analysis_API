@@ -16,7 +16,13 @@ namespace ClientGUI.Connectors
 {
     public class PostgresDataSource : IDataSource
     {
+        private static string DATABASE_SOURCE = "Server=5400-project-db-1;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
         public string ConnectionString { get; set; }
+
+        public PostgresDataSource()
+        {
+            ConnectionString = DATABASE_SOURCE;
+        }
 
         public PostgresDataSource(string connectionString)
         {
