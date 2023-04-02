@@ -22,3 +22,13 @@ services:
         image: project2/sentiment-analysis-sentiment_analysis
         ports:
             - '8000:8000'
+
+    integration_test:
+        build: integration_test
+        image: project2/integration_test
+
+   # integration_test:
+        #build: 
+         #   context: integration_test/IntegrationTest/
+          #  dockerfile: Dockerfile
+       # image: project2/integration_test   

@@ -19,7 +19,9 @@ RUN dotnet publish "ClientGUI.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ClientGUI.dll"]
+#ENTRYPOINT ["dotnet", "ClientGUI.dll"]
+
+ENTRYPOINT ["dotnet", "test", "--logger:trx"]
 
 #Assuming you are in the client-gui/ClientGUI folder
 # docker build -f ./ClientGUI/Dockerfile . -t client-gui
