@@ -6,14 +6,23 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
+WORKDIR /app
+COPY *.sln .
+COPY ["ClientGUIUnitTesting/ClientGUIUnitTesting.csproj", "ClientGUIUnitTesting/"]
 COPY ["ClientGUI/ClientGUI.csproj", "ClientGUI/"]
-RUN dotnet restore "ClientGUI/ClientGUI.csproj"
-COPY . .
-WORKDIR "/src/ClientGUI"
-RUN dotnet build "ClientGUI.csproj" -c Release -o /app/build
+RUN dotnet restore
 
+COPY . .
+RUN dotnet build 
+
+# run the unit tests, if they fail, the build will fail
+FROM build AS test
+WORKDIR /app/ClientGUIUnitTesting
+RUN dotnet test --logger:trx
+
+# publush the app if the tests pass
 FROM build AS publish
+WORKDIR /app/ClientGUI
 RUN dotnet publish "ClientGUI.csproj" -c Release -o /app/publish
 
 FROM base AS final
