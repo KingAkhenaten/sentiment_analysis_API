@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /app
 COPY *.sln .
 COPY ["ClientGUIUnitTesting/ClientGUIUnitTesting.csproj", "ClientGUIUnitTesting/"]
+COPY ["IntegrationTests/IntegrationTests.csproj", "IntegrationTests/"]
 COPY ["ClientGUI/ClientGUI.csproj", "ClientGUI/"]
 RUN dotnet restore
 
@@ -20,7 +21,13 @@ FROM build AS test
 WORKDIR /app/ClientGUIUnitTesting
 RUN dotnet test --logger:trx
 
-# publush the app if the tests pass
+
+# run the integration tests, if they fail, the build will fail
+FROM build AS test
+WORKDIR /app/IntegrationTests
+RUN dotnet test --logger:trx
+
+# publish the app if the tests pass
 FROM build AS publish
 WORKDIR /app/ClientGUI
 RUN dotnet publish "ClientGUI.csproj" -c Release -o /app/publish
