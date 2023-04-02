@@ -11,10 +11,10 @@ namespace IntegrationTest
 {
     public class Tests
     {
-        //private const string PythonApiUrl = @"http://5400-project-sentiment_analysis-1:8000/analyze";
-        private const string PythonApiUrl = @"http://localhost:8000/analyze";
-        //private const string DbConnectionString = "Server=5400-project-db-1;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
-        private const string DbConnectionString = "Server=localhost:5432;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
+        private const string PythonApiUrl = @"http://5400-project-sentiment_analysis-1:8000/analyze";
+        //private const string PythonApiUrl = @"http://localhost:8000/analyze";
+        private const string DbConnectionString = "Server=5400-project-db-1;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
+        //private const string DbConnectionString = "Server=localhost:5432;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
 
         private HttpClient _httpClient;
         private NpgsqlConnection conn;
