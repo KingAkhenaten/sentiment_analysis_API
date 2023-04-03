@@ -28,10 +28,10 @@ jobs:
       run: docker exec 5400-project-sentiment_analysis-1 sh -c 'cd sentiment_analysis && pytest'
 
     - name: Run the gui unit tests
-      run: dotnet test "./src/client_gui/ClientGUI/ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
+      run: dotnet test "./client_gui/ClientGUI/ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
       
     - name: Run the integration tests
-      run: dotnet test "./src/client_gui/ClientGUI/IntegrationTests/IntegrationTest.csproj" --logger:trx
+      run: dotnet test "./client_gui/ClientGUI/IntegrationTests/IntegrationTest.csproj" --logger:trx
 
     - name: Tear down the Docker containers
       run: docker compose -f "docker-compose.yml" down
