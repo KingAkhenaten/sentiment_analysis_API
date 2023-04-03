@@ -17,6 +17,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client_gui/ClientGUI
     
     steps:
     - uses: actions/checkout@v3
@@ -26,8 +29,8 @@ jobs:
     - name: Run the python unit tests for sentiment_analysis
       run: docker exec 5400-project-sentiment_analysis-1 sh -c 'cd sentiment_analysis && pytest'
 
-    #- name: Run the gui unit tests
-    #  run: 
+    - name: Run the gui unit tests
+      run: dotnet test "./ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
       
     #- name: Run the integration tests
       # Run the integration tests
