@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./client_gui
+        working-directory: ./client_gui/ClientGUI
 
     steps:
     - uses: actions/checkout@v3
     - name: Build and run GUI service
       run: |
-       docker build -f ./ClientGUI/Dockerfile . -t client-gui
+       docker build -f ./Dockerfile . -t client-gui
        docker run -it --rm -p "32768:80" client-gui
     - name: Unit test with dotnet test
-      run: dotnet test "ClientGUI/ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
+      run: dotnet test "./ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
