@@ -8,11 +8,11 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["ClientGUI/ClientGUI.csproj", "ClientGUI/"]
-COPY ["ClientGUIUnitTesting/ClientGUIUnitTesting.csproj", "ClientGUIUnitTesting/"]
-COPY ["IntegrationTests/IntegrationTests.csproj", "IntegrationTests/"]
+#COPY ["ClientGUIUnitTesting/ClientGUIUnitTesting.csproj", "ClientGUIUnitTesting/"]
+#COPY ["IntegrationTests/IntegrationTests.csproj", "IntegrationTests/"]
 RUN dotnet restore "ClientGUI/ClientGUI.csproj"
-RUN dotnet restore "ClientGUIUnitTesting/ClientGUIUnitTesting.csproj"
-RUN dotnet restore "IntegrationTests/IntegrationTests.csproj"
+#RUN dotnet restore "ClientGUIUnitTesting/ClientGUIUnitTesting.csproj"
+#RUN dotnet restore "IntegrationTests/IntegrationTests.csproj"
 COPY . .
 WORKDIR "/src/ClientGUI"
 RUN dotnet build "ClientGUI.csproj" -c Release -o /app/build
@@ -23,7 +23,7 @@ RUN dotnet publish "ClientGUI.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=build /src /app/src
+#COPY --from=build /src /app/src
 ENTRYPOINT ["dotnet", "ClientGUI.dll"]
 
 ##FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
