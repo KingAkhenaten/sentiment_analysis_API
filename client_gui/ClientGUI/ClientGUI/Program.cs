@@ -6,7 +6,7 @@ namespace ClientGUI
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            //var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews(); 
@@ -34,7 +34,7 @@ namespace ClientGUI
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            //app.Run();
+            app.Run();
         }
     }
 }
