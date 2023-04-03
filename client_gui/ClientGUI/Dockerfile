@@ -8,7 +8,11 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["ClientGUI/ClientGUI.csproj", "ClientGUI/"]
+COPY ["ClientGUIUnitTesting/ClientGUIUnitTesting.csproj", "ClientGUIUnitTesting/"]
+COPY ["IntegrationTests/IntegrationTests.csproj", "IntegrationTests/"]
 RUN dotnet restore "ClientGUI/ClientGUI.csproj"
+RUN dotnet restore "ClientGUIUnitTesting/ClientGUIUnitTesting.csproj"
+RUN dotnet restore "IntegrationTests/IntegrationTests.csproj"
 COPY . .
 WORKDIR "/src/ClientGUI"
 RUN dotnet build "ClientGUI.csproj" -c Release -o /app/build
