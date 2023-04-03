@@ -23,7 +23,7 @@ RUN dotnet publish "ClientGUI.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=publish /src .
+COPY --from=publish /app/src .
 ENTRYPOINT ["dotnet", "ClientGUI.dll"]
 
 ##FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
