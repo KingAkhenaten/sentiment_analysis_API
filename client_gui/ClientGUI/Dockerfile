@@ -6,18 +6,34 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /app
-COPY *.sln .
-COPY ["ClientGUIUnitTesting/ClientGUIUnitTesting.csproj", "ClientGUIUnitTesting/"]
-COPY ["IntegrationTests/IntegrationTests.csproj", "IntegrationTests/"]
+WORKDIR /src
 COPY ["ClientGUI/ClientGUI.csproj", "ClientGUI/"]
-RUN dotnet restore
-
+RUN dotnet restore "ClientGUI/ClientGUI.csproj"
 COPY . .
-RUN dotnet build
+WORKDIR "/src/ClientGUI"
+RUN dotnet build "ClientGUI.csproj" -c Release -o /app/build
 
-#run the unit tests, if they fail, the build will fail
-#RUN dotnet test "ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
+FROM build AS publish
+RUN dotnet publish "ClientGUI.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "ClientGUI.dll"]
+
+##FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+##WORKDIR /app
+##COPY *.sln .
+##COPY ["ClientGUIUnitTesting/ClientGUIUnitTesting.csproj", "ClientGUIUnitTesting/"]
+##COPY ["IntegrationTests/IntegrationTests.csproj", "IntegrationTests/"]
+##COPY ["ClientGUI/ClientGUI.csproj", "ClientGUI/"]
+##RUN dotnet restore
+
+##COPY . .
+##RUN dotnet build
+
+##run the unit tests, if they fail, the build will fail
+##RUN dotnet test "ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
 
 #run the unit tests, if they fail, the build will fail
 # FROM build AS test
@@ -28,15 +44,15 @@ RUN dotnet build
 # WORKDIR /app/IntegrationTests
 # RUN dotnet test --logger:trx
 
-# publish the app if the tests pass
-FROM build AS publish
-WORKDIR /app/ClientGUI
-RUN dotnet publish "ClientGUI.csproj" -c Release -o /app/publish
+## publish the app if the tests pass
+##FROM build AS publish
+##WORKDIR /app/ClientGUI
+##RUN dotnet publish "ClientGUI.csproj" -c Release -o /app/publish
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ClientGUI.dll"]
+##FROM base AS final
+##WORKDIR /app
+##COPY --from=publish /app/publish .
+##ENTRYPOINT ["dotnet", "ClientGUI.dll"]
 
 #Assuming you are in the client-gui/ClientGUI folder
 # docker build -f ./ClientGUI/Dockerfile . -t client-gui
