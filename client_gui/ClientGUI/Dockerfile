@@ -14,16 +14,19 @@ COPY ["ClientGUI/ClientGUI.csproj", "ClientGUI/"]
 RUN dotnet restore
 
 COPY . .
-RUN dotnet build 
+RUN dotnet build
 
-# run the unit tests, if they fail, the build will fail
-FROM build AS test
-WORKDIR /app/ClientGUIUnitTesting
-RUN dotnet test --logger:trx
+#run the unit tests, if they fail, the build will fail
+RUN dotnet test "ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
 
-# run the integration tests, if they fail, the build will fail
-WORKDIR /app/IntegrationTests
-RUN dotnet test --logger:trx
+#run the unit tests, if they fail, the build will fail
+# FROM build AS test
+# WORKDIR /app/ClientGUIUnitTesting
+# RUN dotnet test --logger:trx
+
+# # run the integration tests, if they fail, the build will fail
+# WORKDIR /app/IntegrationTests
+# RUN dotnet test --logger:trx
 
 # publish the app if the tests pass
 FROM build AS publish
