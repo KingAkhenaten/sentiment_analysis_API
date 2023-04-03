@@ -19,6 +19,6 @@ jobs:
     - name: Build and run GUI service
       run: |
        docker build -f ./Dockerfile . -t client-gui
-       docker run -it --rm -p "32768:80" client-gui
+       docker run --rm -p "32768:80" client-gui
     - name: Unit test with dotnet test
       run: dotnet test "./ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
