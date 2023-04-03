@@ -27,7 +27,8 @@ jobs:
       run: docker exec 5400-project-sentiment_analysis-1 sh -c 'cd sentiment_analysis && pytest'
 
     #- name: Run the gui unit tests
-
+      # GUI unit tests are part of the GUI dockerfile
+      
     #- name: Run the integration tests
       # Run the integration tests
 
