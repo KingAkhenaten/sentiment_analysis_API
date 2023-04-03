@@ -23,7 +23,7 @@ namespace ClientGUI.Controllers
 {
     public class HomeController : Controller
     {
-        //private string SENTIMENT_SOURCE = @"http://host.docker.internal:8000/analyze"; 
+        //private string SENTIMENT_SOURCE = @"http://host.docker.internal:8000/incorrect"; 
         //private string connString = "Server=host.docker.internal;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
         //private string SENTIMENT_SOURCE = @"http://5400-project-sentiment_analysis-1:8000/analyze";
         //private string DATABASE_SOURCE = "Server=5400-project-db-1;Port=5432;Database=DataAnalysis;User Id=root;Password=CSCI5400;";
