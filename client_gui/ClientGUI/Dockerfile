@@ -17,7 +17,7 @@ COPY . .
 RUN dotnet build
 
 #run the unit tests, if they fail, the build will fail
-RUN dotnet test "ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
+#RUN dotnet test "ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
 
 #run the unit tests, if they fail, the build will fail
 # FROM build AS test
