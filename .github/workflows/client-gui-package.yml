@@ -1,0 +1,28 @@
+# File Name: client-gui-package.yml
+# Description: This workflow will build the client gui service and run its unit tests
+# Author: Katie Wilson, wilsonkl4@etsu.edu
+
+name: Client GUI package
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client_gui/ClientGUI
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build GUI service
+      run: |
+       docker build -f ./Dockerfile . -t client-gui
+       #docker run --rm -p "32768:80" client-gui
+    - name: Unit test with dotnet test
+      run: dotnet test "./ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx

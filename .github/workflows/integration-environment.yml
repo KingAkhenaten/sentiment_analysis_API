@@ -1,6 +1,7 @@
 # File Name: integration-environment.yml
 # Description: This workflow will build the integration environment
 # Author: Brandon Rhyno, rhynob@etsu.edu
+#         Katie Wilson, wilsonkl4@etsu.edu
 
 name: Setup Integration Environment
 
@@ -26,11 +27,11 @@ jobs:
     - name: Run the python unit tests for sentiment_analysis
       run: docker exec 5400-project-sentiment_analysis-1 sh -c 'cd sentiment_analysis && pytest'
 
-    #- name: Run the gui unit tests
-      # GUI unit tests are part of the GUI dockerfile
+    - name: Run the gui unit tests
+      run: dotnet test "./client_gui/ClientGUI/ClientGUIUnitTesting/ClientGUIUnitTesting.csproj" --logger:trx
       
-    #- name: Run the integration tests
-      # Run the integration tests
+    - name: Run the integration tests
+      run: dotnet test "./client_gui/ClientGUI/IntegrationTests/IntegrationTests.csproj" --logger:trx
 
     - name: Tear down the Docker containers
       run: docker compose -f "docker-compose.yml" down
