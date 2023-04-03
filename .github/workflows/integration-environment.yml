@@ -1,6 +1,6 @@
 # File Name: integration-environment.yml
 # Description: This workflow will build the integration environment
-# Author: Brandon Rhyno, rhynob@etsu.edu
+# Authors: Brandon Rhyno, rhynob@etsu.edu
 #         Katie Wilson, wilsonkl4@etsu.edu
 
 name: Setup Integration Environment
