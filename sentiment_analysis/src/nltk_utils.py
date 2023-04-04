@@ -19,5 +19,3 @@ def format_analysis(ss: dict):
 
     return {'result': f'{amount * 100}% {polarity}'}
 
-def demo_analysis(x: int):
-    return x**x
