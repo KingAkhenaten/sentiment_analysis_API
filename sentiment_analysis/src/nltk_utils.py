@@ -19,3 +19,5 @@ def format_analysis(ss: dict):
 
     return {'result': f'{amount * 100}% {polarity}'}
 
+def f(x: int):
+    return x**x
