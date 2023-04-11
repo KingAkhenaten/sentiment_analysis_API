@@ -67,6 +67,44 @@ namespace AdminGUI.Connectors
             return sentiments;
         }
 
+        public SentimentModel GetSentiment(int id)
+        {
+            SentimentModel sentiment = null;
+
+            //Connect to the DB
+            NpgsqlConnection conn = new NpgsqlConnection(ConnectionString);
+            conn.Open();
+
+            //Query the DB for the needed sentiment object
+            string query = "SELECT * FROM SentimentAnalysis WHERE Id = @Id";
+            NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            using (var rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    //Read each object from DB, form the SentimentModel object, add it to the list
+                    object[] vals = new object[rdr.FieldCount];
+                    rdr.GetValues(vals);
+                    sentiment =
+                        new SentimentModel
+                        {
+                            Id = (int)vals[0],
+                            Timestamp = (DateTime)vals[1],
+                            TextSearched = (string)vals[2],
+                            SentimentResult = (string)vals[3],
+                            PercentageScore = (float)vals[4]
+                        };
+                }
+            }
+
+            //Close the DB connection
+            conn.Close();
+
+            return sentiment;
+        }
+
         public bool AddSentiment(string text, string sentimentScore, double percentage)
         {
             bool success = false;
@@ -131,5 +169,37 @@ namespace AdminGUI.Connectors
 
             return success;
         }
+
+        public bool EditSentiment(int id, string newSentimentScore)
+        {
+            bool success = false;
+
+            //Connect to the DB
+            NpgsqlConnection conn = new NpgsqlConnection(ConnectionString);
+            conn.Open();
+
+            //Ask the DB to delete the sentiment with the given Id
+            string query = "UPDATE SentimentAnalysis SET SentimentScore = @NewScore WHERE ID = @Id;";
+
+            NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@Id", id);
+            cmd.Parameters.AddWithValue("@NewScore", newSentimentScore);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                success = true;
+            }
+            catch (NpgsqlException e)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to edit in DB sentiment with ID {id}: {e.Message}");
+            }
+
+            //Close the DB connection
+            conn.Close();
+
+            return success;
+        }
+
     }
 }
