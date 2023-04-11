@@ -19,6 +19,57 @@ namespace AdminGUI.Controllers
             return View();
         }
 
+        public IActionResult Analysis()
+        {
+            //Get all the sentiments
+            List<SentimentModel>? sentiments = _dataSource.GetSentiments();
+
+            //Calculate the analysis variables
+            double avgPercentScore = 0;
+            int numPos = 0;
+            int numNeg = 0;
+            int numNeu = 0;
+            double percPos = 0;
+            double percNeg = 0;
+            double percNeu = 0;
+
+            for(int i = 0; i < sentiments.Count; i++)
+            {
+                avgPercentScore += sentiments[i].PercentageScore;
+
+                switch(sentiments[i].SentimentResult)
+                {
+                    case "positive":
+                        numPos++;
+                        break;
+                    case "negative":
+                        numNeg++;
+                        break;
+                    case "neutral":
+                        numNeu++;
+                        break;
+                }
+            }
+
+            avgPercentScore /= sentiments.Count;
+            percPos = numPos / sentiments.Count;
+            percNeg = numNeg / sentiments.Count;
+            percNeu = numNeu / sentiments.Count;
+
+            AnalysisModel analysis = new AnalysisModel
+            {
+                AvgSentimentScore = avgPercentScore,
+                NumPositiveSentiments = numPos,
+                NumNegativeSentiments = numNeg,
+                NumNeutralSentiments = numNeu,
+                PercentPositiveSentiments = percPos,
+                PercentNegativeSentiments = percNeg,
+                PercentNeutralSentiments = percNeu
+            };
+
+            return View("Analysis", analysis);
+        }
+
         public IActionResult Maintenance()
         {
             //Query the database for the sentiments

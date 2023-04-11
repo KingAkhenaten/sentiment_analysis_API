@@ -1,0 +1,54 @@
+﻿@model AdminGUI.Models.AnalysisModel
+
+@{
+    ViewData["Title"] = "Analysis";
+}
+
+<h1>Analysis</h1>
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AvgSentimentScore)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AvgSentimentScore)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumPositiveSentiments)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumPositiveSentiments)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PercentPositiveSentiments)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PercentPositiveSentiments)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumNegativeSentiments)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumNegativeSentiments)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PercentNegativeSentiments)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PercentNegativeSentiments)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumNeutralSentiments)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumNeutralSentiments)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PercentNeutralSentiments)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PercentNeutralSentiments)
+        </dd>
+    </dl>
+</div>
