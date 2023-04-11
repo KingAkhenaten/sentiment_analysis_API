@@ -1,34 +1,18 @@
-﻿<!--
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//	Solution/Project:  ClientGUI - Sentiment Analysis Project
-//	File Name:         Index.cshtml
-//	Description:       Main page of the application - displays list of all sentiments in the DB.
-//	Course:            CSCI-5400 - Software Production
-//	Author:            Katie Wilson, wilsonkl4@etsu.edu, East Tennessee State University
-//	Last Modified:     02/28/23
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--->
-
-@model IEnumerable<ClientGUI.Models.SentimentModel>
+﻿@model IEnumerable<AdminGUI.Models.SentimentModel>
 
 @{
-    ViewData["Title"] = "Sentiment Results";
+    ViewData["Title"] = "Maintenance";
 }
 
-<h1>List of Sentiment Results</h1>
+<h1>Maintenance</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Classify Text</a>
-</p>
 @if (Model == null)
 {
-    <p>There are currently no sentiment results in the database. Please select the "Classify Text" option above.</p>
+    <p>There are currently no sentiment results in the database to manage.</p>
 }
 else
 {
-        <table class="table">
+    <table class="table">
         <thead>
             <tr>
                 <th>
@@ -67,14 +51,12 @@ else
                 <td>
                     @Html.DisplayFor(modelItem => item.PercentageScore)
                 </td>
-                <!--
                 <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id=item.Id })
                 </td>
-                -->
             </tr>
     }
         </tbody>
     </table>
-
 }

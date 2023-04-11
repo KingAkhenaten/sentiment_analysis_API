@@ -17,6 +17,14 @@ services:
         ports:
             - '32768:80'
 
+    admin_gui:
+        build:
+            context: admin_gui/AdminGUI/
+            dockerfile: Dockerfile
+        image: project2/admin_gui
+        ports:
+            - '32769:80'
+
     sentiment_analysis:
         build: sentiment_analysis
         image: project2/sentiment-analysis-sentiment_analysis
