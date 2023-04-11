@@ -567,6 +567,8 @@ namespace IntegrationTest
             Assert.That(model[0].TextSearched, Is.EqualTo(s.Sentence));
         }
 
+        //Commented out because delete functionality has been removed from client
+        /*
         [Test]
         public void DeleteShouldRemoveSentiment()
         {
@@ -606,7 +608,7 @@ namespace IntegrationTest
             var model = view.Model as List<SentimentModel>;
             Assert.Null(model);
         }
-
+        */
 
 
 

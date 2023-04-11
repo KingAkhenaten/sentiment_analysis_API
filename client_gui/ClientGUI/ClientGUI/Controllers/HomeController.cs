@@ -70,7 +70,6 @@ namespace ClientGUI.Controllers
             return RedirectToAction("Index");
         }
 
-        /*
         public async Task<IActionResult> Delete(int id)
         {
             //Remove sentiment from database table
@@ -80,6 +79,5 @@ namespace ClientGUI.Controllers
             //Then, we want to go back to Index
             return RedirectToAction("Index");
         }
-        */
     }
 }
