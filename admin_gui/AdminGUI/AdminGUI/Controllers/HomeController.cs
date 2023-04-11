@@ -52,9 +52,9 @@ namespace AdminGUI.Controllers
             }
 
             avgPercentScore /= sentiments.Count;
-            percPos = numPos / sentiments.Count;
-            percNeg = numNeg / sentiments.Count;
-            percNeu = numNeu / sentiments.Count;
+            percPos = (double)numPos / sentiments.Count;
+            percNeg = (double)numNeg / sentiments.Count;
+            percNeu = (double)numNeu / sentiments.Count;
 
             AnalysisModel analysis = new AnalysisModel
             {
