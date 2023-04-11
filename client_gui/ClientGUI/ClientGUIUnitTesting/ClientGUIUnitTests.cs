@@ -113,6 +113,8 @@ namespace ClientGUIUnitTesting
             Assert.That(redirect.ActionName, Is.EqualTo("Index"));
         }
 
+        //Commented out since delete functionality has been removed from client
+        /*
         [Test]
         public void DeleteShouldRemoveSentiment()
         {
@@ -137,6 +139,7 @@ namespace ClientGUIUnitTesting
             //Ensure that the redirect is for the Index page
             Assert.That(redirect.ActionName, Is.EqualTo("Index"));
         }
+        */
 
         private List<SentimentModel> GetTestListOfSentiments()
         {
