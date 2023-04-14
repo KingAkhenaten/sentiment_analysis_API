@@ -1,0 +1,28 @@
+# File Name: admin-gui-package.yml
+# Description: This workflow will build the admin gui service and run its unit tests
+# Author: Brandon Rhyno, rhynob@etsu.edu
+
+name: Admin GUI package
+
+on:
+  push:
+    branches: [ "AdminGUIUnitTests" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./admin_gui/AdminGUI
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build GUI service
+      run: |
+       docker build -f ./Dockerfile . -t admin-gui
+       #docker run --rm -p "32768:80" admin-gui
+    - name: Unit test with dotnet test
+      run: dotnet test "./AdminGUIUnitTests/AdminGUIUnitTests.csproj" --logger:trx
