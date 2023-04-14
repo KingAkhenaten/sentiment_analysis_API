@@ -6,7 +6,7 @@ name: Admin GUI package
 
 on:
   push:
-    branches: [ "AdminGUIUnitTests" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
