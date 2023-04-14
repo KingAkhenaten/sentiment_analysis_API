@@ -20,7 +20,7 @@ namespace AdminGUIUnitTests
     public class AdminGUIUnitTests
     {
         [Test]
-        public void MaintenacneShouldReturnListOfSentiments()
+        public void MaintenanceShouldReturnListOfSentiments()
         {
             //Mock the database using Moq
             var mockDataSource = new Mock<IDataSource>();
@@ -60,7 +60,7 @@ namespace AdminGUIUnitTests
         }
 
         [Test]
-        public void AnalysisShouldReturnanAlyticsOfSentiments()
+        public void AnalysisShouldReturnAnalyticsOfSentiments()
         {
             //Mock the database using Moq
             var mockDataSource = new Mock<IDataSource>();
