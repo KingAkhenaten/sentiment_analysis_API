@@ -2,6 +2,7 @@
 # Description: This workflow will build the integration environment
 # Author: Brandon Rhyno, rhynob@etsu.edu
 #         Katie Wilson, wilsonkl4@etsu.edu
+#         Caleb Ishola, isholaa@etsu.edu
 
 name: Setup Integration Environment
 
@@ -35,6 +36,10 @@ jobs:
 
     - name: Run the integration tests
       run: dotnet test "./client_gui/ClientGUI/IntegrationTests/IntegrationTests.csproj" --logger:trx
+
+    - name: Run the integration tests number 2
+      run: dotnet test "./admin_gui/AdminGUI/IntegrationTests/IntegrationTests.csproj" --logger:trx
+     
 
     - name: Tear down the Docker containers
       run: docker compose -f "docker-compose.yml" down

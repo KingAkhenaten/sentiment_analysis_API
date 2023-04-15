@@ -5,7 +5,9 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminGUI", "AdminGUI\AdminGUI.csproj", "{22F903D9-83F2-4167-8663-8D7A7F3C4BB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminGUIUnitTests", "AdminGUIUnitTests\AdminGUIUnitTests.csproj", "{E3981A07-EF55-4292-A2DE-871D42505F03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminGUIUnitTests", "AdminGUIUnitTests\AdminGUIUnitTests.csproj", "{E3981A07-EF55-4292-A2DE-871D42505F03}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{0C1EE4F2-9EE3-484F-99F9-EC72B7E43CBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E3981A07-EF55-4292-A2DE-871D42505F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3981A07-EF55-4292-A2DE-871D42505F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3981A07-EF55-4292-A2DE-871D42505F03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C1EE4F2-9EE3-484F-99F9-EC72B7E43CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C1EE4F2-9EE3-484F-99F9-EC72B7E43CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C1EE4F2-9EE3-484F-99F9-EC72B7E43CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C1EE4F2-9EE3-484F-99F9-EC72B7E43CBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
