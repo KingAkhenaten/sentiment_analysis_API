@@ -218,7 +218,7 @@ namespace IntegrationTest
             var query = "INSERT INTO SentimentAnalysis (Id, TimeStamp, Text, SentimentScore, SentimentPercentage) " +
                         "VALUES (@Id, @TimeStamp, @Text, @SentimentScore, @SentimentPercentage);";
             using var cmd = new NpgsqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Id", 1);
+            cmd.Parameters.AddWithValue("@Id", 111);
             cmd.Parameters.AddWithValue("@TimeStamp", DateTime.Now);
             cmd.Parameters.AddWithValue("@Text", inputText);
             cmd.Parameters.AddWithValue("@SentimentScore", "neg");
@@ -253,6 +253,10 @@ namespace IntegrationTest
 
             //Assert that there are the correct amount of sentiments in the model
             Assert.That(model.Count, Is.EqualTo(1));
+
+
+            //Call the Delete method- we do nor need in the db any more 
+            var actionResult3 = sut.Delete(111).Result;
         }
 
 
