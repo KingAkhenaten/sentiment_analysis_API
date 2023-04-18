@@ -2,7 +2,7 @@
 
 public class LoginCommand
 {
-    public bool Execute(string username, string password)
+    public static bool Execute(string username, string password)
     {
         if (username == "admin" && password == "admin")
         {

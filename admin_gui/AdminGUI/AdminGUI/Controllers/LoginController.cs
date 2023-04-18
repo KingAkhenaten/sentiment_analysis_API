@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using AdminGUI.Services;
+using AdminGUI.Models;
 
 namespace AdminGUI.Controllers;
 
@@ -12,8 +13,9 @@ public class LoginController : Controller
         return View();
     }
 
+    /*
     [HttpPost]
-    public async Task<IActionResult> Login([FromServices] LoginCommand loginCommand, [FromBody] LoginRequest request )
+    public async Task<IActionResult> Login([FromServices] LoginCommand loginCommand, [FromBody] LoginModel request )
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         var executeStatus = loginCommand.Execute(request.Username, request.Password);
@@ -25,16 +27,25 @@ public class LoginController : Controller
         return Ok();
 
     }
-}
+    */
 
-public class LoginRequest
-{
-    public LoginRequest(string username, string password)
+    [HttpPost]
+    public IActionResult Login(LoginModel l)
     {
-        Username = username;
-        Password = password;
-    }
+        if (!ModelState.IsValid)
+        {
+            //return BadRequest(ModelState);
+            return RedirectToAction("Index");
+        }
 
-    [Required] public string Username { get; set; }
-    [Required] public string Password { get; set; }
+        var executeStatus = LoginCommand.Execute(l.Username, l.Password);
+        
+        if (!executeStatus)
+        {
+            //return BadRequest(executeStatus);
+            return RedirectToAction("Index");
+        }
+
+        return RedirectToAction("Home/Maintenance");
+    }
 }
