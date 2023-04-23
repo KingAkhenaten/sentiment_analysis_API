@@ -1,5 +1,12 @@
-﻿@{
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+@{
     ViewData["Title"] = "Home Page";
+    if (HttpContextAccessor.HttpContext.Session.GetString("username") == null)
+    {
+        HttpContextAccessor.HttpContext.Response.Redirect("/");
+        return;
+    }
 }
 
 <div class="text-center">

@@ -1,7 +1,13 @@
-﻿@model IEnumerable<AdminGUI.Models.SentimentModel>
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@model IEnumerable<AdminGUI.Models.SentimentModel>
 
 @{
     ViewData["Title"] = "Maintenance";
+    if (HttpContextAccessor.HttpContext.Session.GetString("username") == null)
+    {
+        HttpContextAccessor.HttpContext.Response.Redirect("/");
+        return;
+    }
 }
 
 <h1>Maintenance</h1>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using AdminGUI.Services;
+using AdminGUI.Models;
 
 namespace AdminGUI.Controllers;
 
@@ -12,8 +12,9 @@ public class LoginController : Controller
         return View();
     }
 
+    /*
     [HttpPost]
-    public async Task<IActionResult> Login([FromServices] LoginCommand loginCommand, [FromBody] LoginRequest request )
+    public async Task<IActionResult> Login([FromServices] LoginCommand loginCommand, [FromBody] LoginModel request )
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         var executeStatus = loginCommand.Execute(request.Username, request.Password);
@@ -25,16 +26,26 @@ public class LoginController : Controller
         return Ok();
 
     }
-}
+    */
 
-public class LoginRequest
-{
-    public LoginRequest(string username, string password)
+    [HttpPost]
+    public IActionResult Login(string username, string password)
     {
-        Username = username;
-        Password = password;
+        if (username == "admin" && password == "password")
+        {
+            HttpContext.Session.SetString("username", username);
+            return RedirectToAction("Index", "Home");
+        }
+        else
+        {
+            ViewBag.ErrorMessage = "Invalid username or password";
+            return View("Index");
+        }
     }
 
-    [Required] public string Username { get; set; }
-    [Required] public string Password { get; set; }
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("Index", "Login");
+    }
 }
