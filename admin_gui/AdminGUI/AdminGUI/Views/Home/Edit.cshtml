@@ -1,7 +1,13 @@
-﻿@model AdminGUI.Models.SentimentModel
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@model AdminGUI.Models.SentimentModel
 
 @{
     ViewData["Title"] = "Edit";
+    if (HttpContextAccessor.HttpContext.Session.GetString("username") == null)
+    {
+        HttpContextAccessor.HttpContext.Response.Redirect("/");
+        return;
+    }
 }
 
 <h1>Edit Sentiment</h1>

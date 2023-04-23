@@ -13,6 +13,15 @@ namespace AdminGUI
             builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton<IDataSource>(new PostgresDataSource()); //Uses instance of our postgres database when injecting dependency into controller
 
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -23,12 +32,14 @@ namespace AdminGUI
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
