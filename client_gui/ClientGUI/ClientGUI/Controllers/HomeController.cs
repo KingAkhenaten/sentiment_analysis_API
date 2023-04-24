@@ -40,6 +40,7 @@ namespace ClientGUI.Controllers
 
         public async Task<IActionResult> Index()
         {
+            /*
             //Query the database for the sentiments
             List<SentimentModel>? sentiments = _dataSource.GetSentiments();
 
@@ -49,6 +50,7 @@ namespace ClientGUI.Controllers
 
             //Return the index view, showing the queried sentiments in the list view
             return View("Index", sentiments);
+            */
         }
 
         public IActionResult Create()
