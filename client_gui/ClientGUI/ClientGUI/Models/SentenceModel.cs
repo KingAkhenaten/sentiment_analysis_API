@@ -14,6 +14,6 @@ namespace ClientGUI.Models
 {
     public class SentenceModel
     {
-        public int? Sentence { get; set; }
+        public string? Sentence { get; set; }
     }
 }
