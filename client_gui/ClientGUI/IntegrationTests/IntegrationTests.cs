@@ -58,7 +58,7 @@ namespace IntegrationTest
         public async Task SentimentShouldBePositiveSentiment()
         {
             // Arrange
-            var inputText = "I love this product!";
+            var inputText = "I hate this product!";
             var requestBody = new StringContent($"{{\"sentence\":\"{inputText}\"}}", Encoding.UTF8, "application/json");
 
             // Act
